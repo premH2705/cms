@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ganpat University | Demo Homepage</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: url("assets/bgpng") no-repeat center center fixed;
+      background-size: cover;
+      color: #111;
+    }
+
+    /* Header */
+    header {
+      background: rgba(179, 0, 0, 0.9);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 40px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    header img {
+      height: 65px;
+    }
+
+    header h1 {
+      font-size: 1.9rem;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    /* Navbar */
+    nav {
+      background-color: rgba(144, 0, 0, 0.95);
+      display: flex;
+      justify-content: center;
+      gap: 35px;
+      padding: 14px 0;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #ffcc00;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 100px 20px 70px;
+      background: rgba(255, 255, 255, 0.88);
+      border-radius: 15px;
+      width: 85%;
+      margin: 80px auto;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(4px);
+    }
+
+    .hero h2 {
+      color: #b30000;
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      color: #222;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    /* CMS Button */
+    .cms-button {
+      position: fixed;
+      top: 25px;
+      right: 25px;
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: 0.3s;
+      z-index: 100;
+    }
+
+    .cms-button:hover {
+      background: #0059c1;
+      transform: translateY(-2px);
+    }
+
+    footer {
+      background: rgba(144, 0, 0, 0.95);
+      color: white;
+      text-align: center;
+      padding: 14px;
+      font-size: 0.9rem;
+      margin-top: 50px;
+    }
+
+    @media (max-width: 768px) {
+      header, nav {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .cms-button {
+        position: static;
+        display: block;
+        margin: 15px auto;
+      }
+
+      .hero h2 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <img src="assets/gnlogo.png" alt="Ganpat University Logo">
+    <h1>Ganpat University</h1>
+  </header>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Academics</a>
+    <a href="#">Admissions</a>
+    <a href="#">Research</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <!-- CMS BUTTON -->
+  <button class="cms-button" onclick="window.location.href='login.html'">
+    💬 Complaint Management System
+  </button>
+
+  <!-- HERO SECTION -->
+  <div class="hero">
+    <h2>Welcome to Ganpat University</h2>
+    <p>Empowering through Education • Innovation • Excellence</p>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2025 Ganpat University | All Rights Reserved
+  </footer>
+</body>
+</html>
