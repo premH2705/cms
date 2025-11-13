@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View Complaints | Admin Panel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="hub-bg">
+
+  <header class="hub-header">
+    <h1>
+      <img src="assets/logo.png" alt="Logo" class="hub-logo">
+      University Complaint Hub - Admin
+    </h1>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </header>
+
+  <div class="container">
+    <div class="sidebar hub-sidebar">
+      <a href="home.html">🏠 Admin Dashboard</a>
+      <a href="viewComplaints.html" class="active">📋 View All Complaints</a>
+      <a href="profile.html">👤 Profile</a>
+    </div>
+
+    <div class="main-content">
+      <div class="hub-card">
+        <h2>📋 All Student Complaints</h2>
+        <div id="allComplaintsList" class="complaint-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="hub-footer">
+    © 2025 University Complaint Hub | Admin Panel
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    const adminUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (!adminUser || adminUser.role !== "Admin") {
+      alert("Access denied. Admins only!");
+      window.location.href = "login.html";
+    }
+
+    const allComplaintsList = document.getElementById("allComplaintsList");
+
+    function loadAllComplaints() {
+      allComplaintsList.innerHTML = "";
+      let foundAny = false;
+
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.startsWith("complaints_")) {
+          const username = key.replace("complaints_", "");
+          const complaints = JSON.parse(localStorage.getItem(key)) || [];
+
+          if (complaints.length > 0) {
+            foundAny = true;
+            const section = document.createElement("div");
+            section.classList.add("complaint-item");
+            section.innerHTML = `<h3>👤 Complaints from <b>${username}</b></h3>`;
+
+            complaints.forEach((c, index) => {
+              const cDiv = document.createElement("div");
+              cDiv.classList.add("sub-complaint");
+              cDiv.innerHTML = `
+                <h4>${index + 1}. ${c.title}</h4>
+                <p>${c.description}</p>
+                <p><small>Filed On: <b>${c.date}</b></small></p>
+                <p><small>Status: <b style="color:${c.status === 'Resolved' ? 'green' : 'orange'}">${c.status}</b></small></p>
+                ${c.resolvedDate ? `<p><small>Resolved On: <b>${c.resolvedDate}</b></small></p>` : ""}
+                ${
+                  c.status === "Pending"
+                    ? `<button class="resolve-btn" onclick="markResolved('${username}', ${index})">Mark as Resolved ✅</button>`
+                    : ""
+                }
+                <hr>
+              `;
+              section.appendChild(cDiv);
+            });
+            allComplaintsList.appendChild(section);
+          }
+        }
+      }
+
+      if (!foundAny) {
+        allComplaintsList.innerHTML = "<p>No complaints found from any student.</p>";
+      }
+    }
+
+    function markResolved(username, index) {
+      const key = `complaints_${username}`;
+      const complaints = JSON.parse(localStorage.getItem(key)) || [];
+      complaints[index].status = "Resolved";
+      complaints[index].resolvedDate = new Date().toLocaleString();
+      localStorage.setItem(key, JSON.stringify(complaints));
+      loadAllComplaints();
+    }
+
+    loadAllComplaints();
+  </script>
+</body>
+</html>

@@ -2,42 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Home | Complaint Management System</title>
+  <title>Home | University Complaint Hub</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <!-- Header Section -->
-  <header>
+<body class="hub-bg">
+
+  <!-- Header -->
+  <header class="hub-header">
     <h1>
-      <img src="assets/logo.png" alt="CMS Logo">
-      Complaint Management System
+      <img src="assets/logo.png" alt="Logo" class="hub-logo">
+      University Complaint Hub
     </h1>
-    <button onclick="logout()">Logout</button>
+    <button onclick="logout()" class="logout-btn">Logout</button>
   </header>
 
-  <!-- Main Layout -->
+  <!-- Layout -->
   <div class="container">
-    <!-- Sidebar Navigation -->
-    <div class="sidebar">
-      <a href="home.html" class="active">🏠 Dashboard</a>
-      <a href="#">📝 File Complaint</a>
-      <a href="#">📄 View Complaints</a>
-      <a href="profile.html">👤 Profile</a>
+    <!-- Sidebar -->
+    <div class="sidebar hub-sidebar" id="sidebar">
+      <!-- Sidebar links will load dynamically from JS -->
     </div>
 
-    <!-- Main Content -->
+    <!-- Main Section -->
     <div class="main-content">
-      <div class="card">
-        <img src="assets/logo.png" alt="Logo">
-        <h2 id="welcome"></h2>
-        <p>Manage and track all complaints in one place.</p>
+      <div class="hub-card" id="dashboardContent">
+        <!-- Dynamic dashboard content -->
       </div>
     </div>
   </div>
 
   <!-- Footer -->
-  <footer>
-    © 2025 Complaint Management System | College Project Demo
+  <footer class="hub-footer">
+    © 2025 University Complaint Hub | For College Demo
   </footer>
 
   <script src="script.js"></script>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>File Complaint | University Complaint Hub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="hub-bg">
+  <header class="hub-header">
+    <h1>
+      <img src="assets/logo.png" alt="Logo" class="hub-logo">
+      File Complaint
+    </h1>
+    <button onclick="logout()" class="logout-btn">Logout</button>
+  </header>
+
+  <div class="container">
+    <div class="sidebar hub-sidebar">
+      <a href="home.html">🏠 Dashboard</a>
+      <a href="complaint.html" class="active">📝 File Complaint</a>
+      <a href="profile.html">👤 Profile</a>
+    </div>
+
+    <div class="main-content">
+      <div class="hub-card">
+        <h2>📝 Submit a Complaint</h2>
+        <form id="complaintForm" class="complaint-form">
+          <input type="text" id="title" placeholder="Complaint Title" required>
+          <textarea id="description" placeholder="Describe your issue" required></textarea>
+          <button type="submit" class="submit-btn">Submit Complaint</button>
+        </form>
+
+        <h3 style="margin-top: 30px;">📋 My Complaints</h3>
+        <div id="myComplaintsList" class="complaint-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="hub-footer">
+    © 2025 University Complaint Hub
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    const loggedUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (!loggedUser || loggedUser.role !== "Student") {
+      alert("Access denied! Students only.");
+      window.location.href = "login.html";
+    }
+
+    const form = document.getElementById("complaintForm");
+    const list = document.getElementById("myComplaintsList");
+
+    function loadComplaints() {
+      const complaints = JSON.parse(localStorage.getItem(`complaints_${loggedUser.username}`)) || [];
+      list.innerHTML = "";
+      if (complaints.length === 0) {
+        list.innerHTML = "<p>No complaints filed yet.</p>";
+        return;
+      }
+      complaints.forEach((c, i) => {
+        const div = document.createElement("div");
+        div.classList.add("complaint-item");
+        div.innerHTML = `
+          <h4>${i + 1}. ${c.title}</h4>
+          <p>${c.description}</p>
+          <p><small>Filed On: <b>${c.date}</b></small></p>
+          <p><small>Status: <b style="color:${c.status === 'Resolved' ? 'green' : 'orange'}">${c.status}</b></small></p>
+          ${c.resolvedDate ? `<p><small>Resolved On: <b>${c.resolvedDate}</b></small></p>` : ""}
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const title = document.getElementById("title").value.trim();
+      const description = document.getElementById("description").value.trim();
+      if (!title || !description) return alert("Please fill all fields!");
+
+      const now = new Date().toLocaleString();
+      const complaints = JSON.parse(localStorage.getItem(`complaints_${loggedUser.username}`)) || [];
+      complaints.push({ title, description, status: "Pending", date: now });
+      localStorage.setItem(`complaints_${loggedUser.username}`, JSON.stringify(complaints));
+      form.reset();
+      loadComplaints();
+    });
+
+    loadComplaints();
+  </script>
+</body>
+</html>

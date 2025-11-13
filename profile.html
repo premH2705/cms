@@ -2,44 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Profile | Complaint Management System</title>
+  <title>Profile | University Complaint Hub</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <!-- Header -->
-  <header>
+<body class="hub-bg">
+
+  <header class="hub-header">
     <h1>
-      <img src="assets/logo.png" alt="CMS Logo">
-      Complaint Management System
+      <img src="assets/logo.png" alt="Logo" class="hub-logo">
+      University Complaint Hub
     </h1>
-    <button onclick="logout()">Logout</button>
+    <button class="logout-btn" onclick="logout()">Logout</button>
   </header>
 
-  <!-- Main Layout -->
-  <div class="container">
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <a href="home.html">🏠 Dashboard</a>
-      <a href="#">📝 File Complaint</a>
-      <a href="#">📄 View Complaints</a>
-      <a href="profile.html" class="active">👤 Profile</a>
-    </div>
+  <div class="profile-container">
+    <img src="assets/logo.png" alt="Profile">
+    <h2 id="profileName">User Name</h2>
+    <p><strong>Role:</strong> <span id="profileRole"></span></p>
+    <p><strong>Email:</strong> <span id="profileEmail"></span></p>
 
-    <!-- Profile Card -->
-    <div class="main-content">
-      <div class="card" id="profileCard">
-        <img src="assets/logo.png" alt="Logo">
-        <h2>User Profile</h2>
-        <p><strong>Name:</strong> <span id="pname"></span></p>
-        <p><strong>Email:</strong> <span id="pemail"></span></p>
-        <p><strong>Role:</strong> <span id="prole"></span></p>
-      </div>
-    </div>
+    <a href="home.html" class="back-btn">← Back to Dashboard</a>
   </div>
 
-  <!-- Footer -->
-  <footer>
-    © 2025 Complaint Management System | College Project Demo
+  <footer class="hub-footer">
+    © 2025 University Complaint Hub | Developed for Presentation
   </footer>
 
   <script src="script.js"></script>
