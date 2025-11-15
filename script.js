@@ -7,21 +7,24 @@ let users = JSON.parse(localStorage.getItem("cms_users")) || {
         email: "admin@guni.ac.in",
         username: "admin",
         password: "1234",
-        role: "admin"
+        role: "admin",
+        rollNumber: "N/A"
     },
     student1: {
         name: "Prem Patel",
         email: "prem@guni.ac.in",
         username: "student1",
         password: "1111",
-        role: "student"
+        role: "student",
+        rollNumber: "21CS001"
     },
     student2: {
         name: "Priyank Patel",
         email: "priyank@guni.ac.in",
         username: "student2",
         password: "2222",
-        role: "student"
+        role: "student",
+        rollNumber: "21CS002"
     }
 };
 localStorage.setItem("cms_users", JSON.stringify(users));
@@ -32,6 +35,9 @@ localStorage.setItem("cms_users", JSON.stringify(users));
    MAIN EVENT LOADER (Fixed Version)
    ================================= */
 document.addEventListener("DOMContentLoaded", () => {
+
+    // Check if user is logged in for protected pages
+    checkAuth();
 
     // LOAD LOGIN ONLY ON LOGIN PAGE
     const loginForm = document.getElementById("loginForm");
@@ -67,6 +73,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* ================================
+   📌 CHECK AUTHENTICATION
+   ================================= */
+function checkAuth() {
+    const publicPages = ['login.html', 'signup.html', 'index.html'];
+    const currentPage = window.location.pathname.split('/').pop();
+    
+    if (!publicPages.includes(currentPage)) {
+        const user = JSON.parse(localStorage.getItem("loggedInUser"));
+        if (!user) {
+            window.location.href = "login.html";
+        }
+    }
+}
+
+
+
+/* ================================
    📌 LOGIN FUNCTION (Works 100%)
    ================================= */
 function loginUser() {
@@ -95,6 +118,7 @@ function registerNewUser() {
     const email = document.getElementById("signupEmail").value.trim();
     const username = document.getElementById("signupUser").value.trim();
     const password = document.getElementById("signupPass").value.trim();
+    const rollNumber = document.getElementById("signupRoll") ? document.getElementById("signupRoll").value.trim() : "";
 
     if (!name || !email || !username || !password) {
         alert("All fields are required!");
@@ -118,7 +142,8 @@ function registerNewUser() {
         email,
         username,
         password,
-        role: "student"
+        role: "student",
+        rollNumber: rollNumber || "Not Set"
     };
 
     localStorage.setItem("cms_users", JSON.stringify(users));
@@ -154,7 +179,8 @@ function loadSidebar() {
         <h3 class="side-title">Admin Panel</h3>
         <a href="home.html">Dashboard</a>
         <a href="viewComplaints.html">View All Complaints</a>
-        <a onclick="logout()" class="logout-btn">Logout</a>
+        <a href="profile.html">My Profile</a>
+        <a onclick="logout()" class="logout-btn" style="cursor: pointer;">Logout</a>
         `;
     } else {
         sidebar.innerHTML = `
@@ -163,7 +189,7 @@ function loadSidebar() {
         <a href="fileComplaint.html">File Complaint</a>
         <a href="viewStatus.html">My Complaint Status</a>
         <a href="profile.html">My Profile</a>
-        <a onclick="logout()" class="logout-btn">Logout</a>
+        <a onclick="logout()" class="logout-btn" style="cursor: pointer;">Logout</a>
         `;
     }
 }
@@ -174,16 +200,71 @@ function loadSidebar() {
    📌 LOAD PROFILE DETAILS
    ================================= */
 function loadProfile() {
-    const name = document.getElementById("pName");
-    if (!name) return;
+    // Check multiple possible element IDs for profile page
+    const profileName = document.getElementById("pName") || document.getElementById("profileName");
+    if (!profileName) return;
 
     const user = JSON.parse(localStorage.getItem("loggedInUser"));
     if (!user) return;
 
-    document.getElementById("pName").innerText = user.name;
-    document.getElementById("pEmail").innerText = user.email;
-    document.getElementById("pUser").innerText = user.username;
-    document.getElementById("pRole").innerText = user.role.toUpperCase();
+    // Profile page elements (old format)
+    if (document.getElementById("pName")) {
+        document.getElementById("pName").innerText = user.name;
+        document.getElementById("pEmail").innerText = user.email;
+        document.getElementById("pUser").innerText = user.username;
+        document.getElementById("pRole").innerText = user.role.toUpperCase();
+        
+        // Add roll number if element exists
+        const rollElem = document.getElementById("pRoll");
+        if (rollElem) {
+            rollElem.innerText = user.rollNumber || "Not Set";
+        }
+    }
+
+    // Profile page elements (new format)
+    if (document.getElementById("profileName")) {
+        document.getElementById("profileName").innerText = user.name;
+        document.getElementById("profileEmail").innerText = user.email;
+        document.getElementById("profileRole").innerText = user.role.toUpperCase();
+        
+        // Add username if element exists
+        const usernameElem = document.getElementById("profileUsername");
+        if (usernameElem) {
+            usernameElem.innerText = user.username;
+        }
+        
+        // Add roll number if element exists
+        const rollElem = document.getElementById("profileRoll");
+        if (rollElem) {
+            rollElem.innerText = user.rollNumber || "Not Set";
+        }
+    }
+}
+
+
+
+/* ================================
+   📌 UPDATE PROFILE (NEW FUNCTION)
+   ================================= */
+function updateProfile() {
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (!user) return;
+
+    const newRollNumber = document.getElementById("editRoll") ? document.getElementById("editRoll").value.trim() : null;
+    
+    if (newRollNumber) {
+        // Update in users database
+        let users = JSON.parse(localStorage.getItem("cms_users"));
+        users[user.username].rollNumber = newRollNumber;
+        localStorage.setItem("cms_users", JSON.stringify(users));
+
+        // Update logged in user
+        user.rollNumber = newRollNumber;
+        localStorage.setItem("loggedInUser", JSON.stringify(user));
+
+        alert("Profile updated successfully!");
+        loadProfile();
+    }
 }
 
 
@@ -331,10 +412,10 @@ function loadAdminTable() {
             <td>${c.date}</td>
             <td>${c.status}</td>
             <td>
-                <button onclick="openComplaint(${c.id})" class="resolve-btn" style="background:#0b63d6;">Read</button>
+                <button onclick="openViewModal(${c.id})" class="view-btn">View</button>
                 ${c.status === "Pending" ? 
                    `<button class="resolve-btn" onclick="resolveComplaint(${c.id})">Resolve</button>` 
-                   : c.resolvedOn}
+                   : `<span style="color: green; font-weight: 600;">${c.resolvedOn}</span>`}
             </td>
         </tr>
     `).join("");
@@ -405,18 +486,18 @@ function loadStatusBox() {
     const list = all.filter(c => c.user === user.username);
 
     if (list.length === 0) {
-        box.innerHTML = `<p>No complaints submitted.</p>`;
+        box.innerHTML = `<p style="text-align: center; color: #888; padding: 30px;">No complaints submitted yet.</p>`;
         return;
     }
 
     box.innerHTML = list.map(c => `
         <div class="status-card">
             <h3>${c.title}</h3>
-            <p><b>Category:</b> ${c.category}</p>
-            <p><b>Status:</b> ${c.status}</p>
-            <p><b>Filed On:</b> ${c.date}</p>
-            ${c.resolvedOn ? `<p><b>Resolved On:</b> ${c.resolvedOn}</p>` : ""}
-            <p>${c.desc}</p>
+            <p class="status-meta"><b>Category:</b> ${c.category}</p>
+            <p class="status-meta"><b>Filed On:</b> ${c.date}</p>
+            ${c.resolvedOn ? `<p class="status-meta"><b>Resolved On:</b> ${c.resolvedOn}</p>` : ""}
+            <p class="status-meta"><b>Description:</b> ${c.desc}</p>
+            <span class="badge ${c.status === 'Pending' ? 'pending' : 'resolved'}">${c.status}</span>
         </div>
     `).join("");
 }

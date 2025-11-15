@@ -1,20 +1,208 @@
 <!doctype html>
 <html>
-<head><meta charset="utf-8"><title>Profile</title><link rel="stylesheet" href="style.css"></head>
+<head>
+  <meta charset="utf-8">
+  <title>Profile | University Complaint Hub</title>
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #eaf2ff;
+    }
+
+    /* HEADER */
+    .hub-header {
+      background: #0b63d6;
+      color: white;
+      padding: 18px 35px;
+      font-size: 22px;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .hub-header img {
+      height: 55px;
+      margin-right: 12px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logout-btn {
+      background: white;
+      border: none;
+      padding: 10px 20px;
+      color: #0b63d6;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* PAGE LAYOUT */
+    .container {
+      display: flex;
+      margin-top: 0;
+    }
+
+    /* SIDEBAR */
+    .hub-sidebar {
+      width: 230px;
+      background: white;
+      min-height: 100vh;
+      padding: 25px 10px;
+      border-right: 1px solid #d7e2ff;
+      box-shadow: 2px 0 6px rgba(0,0,0,0.05);
+    }
+
+    /* MAIN CONTENT */
+    .main-content {
+      padding: 35px;
+      flex-grow: 1;
+    }
+
+    .profile-card {
+      background: white;
+      padding: 35px;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      max-width: 600px;
+    }
+
+    .profile-card h2 {
+      color: #0b63d6;
+      font-size: 28px;
+      margin-bottom: 25px;
+      border-bottom: 3px solid #0b63d6;
+      padding-bottom: 10px;
+    }
+
+    .profile-info {
+      margin: 18px 0;
+      font-size: 16px;
+    }
+
+    .profile-info strong {
+      color: #333;
+      display: inline-block;
+      width: 140px;
+    }
+
+    .profile-info span {
+      color: #555;
+      font-weight: 500;
+    }
+
+    .edit-section {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 2px solid #eee;
+    }
+
+    .edit-section h3 {
+      color: #0b63d6;
+      margin-bottom: 15px;
+    }
+
+    .edit-section input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1.5px solid #cbd6f5;
+      background: #f7faff;
+      font-size: 15px;
+      margin-bottom: 12px;
+    }
+
+    .edit-section input:focus {
+      background: white;
+      border-color: #0b63d6;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(11, 99, 214, 0.2);
+    }
+
+    .btn {
+      background: #0b63d6;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 15px;
+      transition: 0.25s;
+    }
+
+    .btn:hover {
+      background: #084ca8;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
 <body>
-  <aside class="app-sidebar" id="sidebar"></aside>
-  <header class="app-header">
-    <div class="brand"><img src="assets/logo.png" alt=""> University Complaint Hub</div>
-    <div class="header-actions"><button class="logout" onclick="logout()">Logout</button></div>
-  </header>
-  <main class="app-main">
-    <div class="profile-card container-card">
-      <h2 id="profileName">Name</h2>
-      <p><strong>Role:</strong> <span id="profileRole"></span></p>
-      <p><strong>Email:</strong> <span id="profileEmail"></span></p>
-      <div style="margin-top:12px"><button class="btn" onclick="logout()">Logout</button></div>
+
+  <!-- HEADER -->
+  <header class="hub-header">
+    <div class="header-left">
+      <img src="assets/logo.png" alt="Logo">
+      University Complaint Hub
     </div>
-  </main>
-<script src="script.js"></script>
+    <button onclick="logout()" class="logout-btn">Logout</button>
+  </header>
+
+  <!-- LAYOUT -->
+  <div class="container">
+    
+    <!-- SIDEBAR (AUTO LOADED BY script.js) -->
+    <div class="hub-sidebar" id="sidebar"></div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <div class="profile-card">
+        <h2>My Profile</h2>
+        
+        <div class="profile-info">
+          <strong>Name:</strong>
+          <span id="profileName">Loading...</span>
+        </div>
+
+        <div class="profile-info">
+          <strong>Email:</strong>
+          <span id="profileEmail">Loading...</span>
+        </div>
+
+        <div class="profile-info">
+          <strong>Username:</strong>
+          <span id="profileUsername">Loading...</span>
+        </div>
+
+        <div class="profile-info">
+          <strong>Role:</strong>
+          <span id="profileRole">Loading...</span>
+        </div>
+
+        <div class="profile-info">
+          <strong>Roll Number:</strong>
+          <span id="profileRoll">Loading...</span>
+        </div>
+
+        <!-- Edit Section for Roll Number -->
+        <div class="edit-section" id="editSection">
+          <h3>Update Roll Number</h3>
+          <input type="text" id="editRoll" placeholder="Enter your roll number">
+          <button class="btn" onclick="updateProfile()">Update Roll Number</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
