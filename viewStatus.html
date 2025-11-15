@@ -1,0 +1,168 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>My Complaints</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+  /* Full Layout Fix to Match Other Pages */
+  body {
+    background: #f4f7fe;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 14px 28px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border-radius: 0 0 14px 14px;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--primary);
+  }
+
+  .brand img {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .logout {
+    background: #e63946;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+  }
+
+  .logout:hover {
+    background: #c92a35;
+  }
+
+  .app-main {
+    margin-left: 260px;
+    padding: 30px;
+  }
+
+  .app-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 230px;
+    height: 100vh;
+    background: white;
+    padding-top: 80px;
+    box-shadow: 3px 0 25px rgba(0,0,0,0.06);
+  }
+
+
+
+  /* Page Title */
+  .page-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 20px;
+    letter-spacing: -0.2px;
+  }
+
+  /* Complaint Status Cards */
+  .container-card {
+    width: 100%;
+    max-width: 900px;
+  }
+
+  .status-card {
+    background: #ffffff;
+    padding: 22px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+    border-left: 6px solid var(--primary);
+    transition: 0.25s;
+  }
+
+  .status-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+  }
+
+  .status-card h3 {
+    margin-bottom: 8px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #222;
+  }
+
+  .status-meta {
+    font-size: 15px;
+    color: #555;
+    margin: 6px 0;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 8px;
+  }
+
+  .badge.pending {
+    background: #fff6e1;
+    color: #b87400;
+    border: 1px solid #ffd89d;
+  }
+
+  .badge.resolved {
+    background: #e6fff5;
+    color: #008f4d;
+    border: 1px solid #b7f3d6;
+  }
+
+</style>
+
+</head>
+<body>
+
+  <aside class="app-sidebar" id="sidebar"></aside>
+
+  <header class="app-header">
+    <div class="brand">
+      <img src="assets/logo.png" alt="">
+      University Complaint Hub
+    </div>
+    <div class="header-actions">
+      <button class="logout" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <main class="app-main">
+
+    <h2 class="page-title">📄 My Complaint Status</h2>
+
+    <div id="statusBox" class="container-card"></div>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

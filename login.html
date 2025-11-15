@@ -1,23 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Login | University Complaint Hub</title>
-  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #eaf2ff;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-box {
+      width: 350px;
+      background: white;
+      padding: 33px 25px;
+      border-radius: 16px;
+      box-shadow: 0 8px 23px rgba(0,0,0,0.18);
+      text-align: center;
+    }
+
+    .logo {
+      height: 100px;
+      margin-bottom: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      margin-top: 11px;
+      border-radius: 10px;
+      border: 1.5px solid #cfd9ff;
+      background: #f5faff;
+      font-size: 14px;
+    }
+
+    input:focus {
+      background: white;
+      border-color: #0b63d6;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(11,99,214,0.18);
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      margin-top: 22px;
+      background: #0b63d6;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 17px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .btn-login:hover {
+      background: #084ca8;
+    }
+
+    .signup {
+      margin-top: 13px;
+      font-size: 13px;
+    }
+
+    .signup a {
+      color: #0b63d6;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  </style>
 </head>
+
 <body>
-  <div class="login-container">
-    <div class="login-box">
-      <img src="assets/logo.png" alt="University Logo">
-      <h2>University Complaint Hub</h2>
 
-      <input type="text" id="username" placeholder="Username" required>
-      <input type="password" id="password" placeholder="Password" required>
+  <div class="login-box">
 
-      <button onclick="login()">Login</button>
+    <!-- Correct Logo -->
+    <img src="assets/logo.png" class="logo" alt="University Logo">
 
-      
-    </div>
+    <form id="loginForm">
+      <input type="text" id="loginUser" placeholder="Username" required>
+      <input type="password" id="loginPass" placeholder="Password" required>
+      <button type="submit" class="btn-login">Login</button>
+    </form>
+
+    <p class="signup">New student? <a href="signup.html">Register here</a></p>
+
   </div>
 
   <script src="script.js"></script>

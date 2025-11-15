@@ -1,33 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Profile | University Complaint Hub</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body class="hub-bg">
-
-  <header class="hub-header">
-    <h1>
-      <img src="assets/logo.png" alt="Logo" class="hub-logo">
-      University Complaint Hub
-    </h1>
-    <button class="logout-btn" onclick="logout()">Logout</button>
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Profile</title><link rel="stylesheet" href="style.css"></head>
+<body>
+  <aside class="app-sidebar" id="sidebar"></aside>
+  <header class="app-header">
+    <div class="brand"><img src="assets/logo.png" alt=""> University Complaint Hub</div>
+    <div class="header-actions"><button class="logout" onclick="logout()">Logout</button></div>
   </header>
-
-  <div class="profile-container">
-    <img src="assets/logo.png" alt="Profile">
-    <h2 id="profileName">User Name</h2>
-    <p><strong>Role:</strong> <span id="profileRole"></span></p>
-    <p><strong>Email:</strong> <span id="profileEmail"></span></p>
-
-    <a href="home.html" class="back-btn">← Back to Dashboard</a>
-  </div>
-
-  <footer class="hub-footer">
-    © 2025 University Complaint Hub | Developed for Presentation
-  </footer>
-
-  <script src="script.js"></script>
+  <main class="app-main">
+    <div class="profile-card container-card">
+      <h2 id="profileName">Name</h2>
+      <p><strong>Role:</strong> <span id="profileRole"></span></p>
+      <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+      <div style="margin-top:12px"><button class="btn" onclick="logout()">Logout</button></div>
+    </div>
+  </main>
+<script src="script.js"></script>
 </body>
 </html>
